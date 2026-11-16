@@ -1,11 +1,6 @@
-import {
-  getLocalStorage,
-  setLocalStorage,
-  updateCartCount
-} from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
 export default class ProductDetails {
-
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
@@ -14,16 +9,22 @@ export default class ProductDetails {
 
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
+    if (!this.product) {
+      document.querySelector(".product-detail").textContent =
+        "Product not found.";
+      return;
+    }
     this.renderProductDetails();
     document
-      .getElementById('addToCart')
-      .addEventListener('click', this.addProductToCart.bind(this));
+      .getElementById("addToCart")
+      .addEventListener("click", this.addProductToCart.bind(this));
   }
 
   addProductToCart() {
     const cartItems = getLocalStorage("so-cart") || [];
     cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
+    updateCartCount();
   }
 
   renderProductDetails() {
@@ -32,23 +33,22 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  document.querySelector('h2').textContent = product.Brand.Name;
-  document.querySelector('h3').textContent = product.NameWithoutBrand;
+  document.querySelector(".product-detail h2").textContent = product.Brand.Name;
+  document.querySelector(".product-detail h3").textContent =
+    product.NameWithoutBrand;
 
-  const productImage = document.getElementById('productImage');
+  const productImage = document.getElementById("productImage");
   productImage.src = product.Image;
   productImage.alt = product.NameWithoutBrand;
 
-  document.getElementById('productPrice').textContent = product.FinalPrice;
-  document.getElementById('productColor').textContent = product.Colors[0].ColorName;
-  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
+  document.getElementById("productPrice").textContent =
+    `$${product.FinalPrice.toFixed(2)}`;
+  document.getElementById("productColor").textContent =
+    product.Colors[0].ColorName;
+  document.getElementById("productDesc").innerHTML =
+    product.DescriptionHtmlSimple;
 
-  document.getElementById('addToCart').dataset.id = product.Id;
-};
-
-addProductToCart(); {
-  const cartItems = getLocalStorage("so-cart") || [];
-  cartItems.push(this.product);
-  setLocalStorage("so-cart", cartItems);
-  updateCartCount();
+  document.title = `Sleep Outside | ${product.Name}`;
+  document.getElementById("addToCart").dataset.id = product.Id;
+  document.getElementById("addToCart").disabled = false;
 }
