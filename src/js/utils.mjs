@@ -19,10 +19,16 @@ export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get(param);
-  return product
+  return product;
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+export function renderListWithTemplate(
+  template,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false,
+) {
   const htmlStrings = list.map(template);
   if (clear) {
     parentElement.innerHTML = "";
@@ -39,4 +45,3 @@ export function updateCartCount() {
     badge.textContent = cartItems.length;
   }
 }
-updateCartCount();
