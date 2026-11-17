@@ -29,3 +29,14 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  const badge = document.querySelector(".cart-count");
+
+  if (badge) {
+    badge.textContent = cartItems.length;
+  }
+}
+updateCartCount();
