@@ -1,4 +1,4 @@
-import { getParam, updateCartCount } from "./utils.mjs";
+import { getParam, loadHeaderFooter } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
 
@@ -9,7 +9,7 @@ product.init().catch(() => {
   document.querySelector(".product-detail").textContent =
     "Unable to load this product. Please try again.";
 });
-updateCartCount();
+loadHeaderFooter();
 
 
 // // add to cart button event handler
