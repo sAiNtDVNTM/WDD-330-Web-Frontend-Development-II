@@ -1,6 +1,7 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
-import { updateCartCount } from "./utils.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
+
 
 const dataSource = new ProductData("tents");
 
@@ -12,4 +13,4 @@ productList.init().catch(() => {
   element.textContent = "Unable to load products. Please try again.";
 });
 
-updateCartCount();
+loadHeaderFooter();
