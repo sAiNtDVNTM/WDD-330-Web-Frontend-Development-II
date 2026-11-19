@@ -46,9 +46,9 @@ function productDetailsTemplate(product) {
   document.getElementById('addToCart').dataset.id = product.Id;
 };
 
-addProductToCart(); {
-  const cartItems = getLocalStorage("so-cart") || [];
-  cartItems.push(this.product);
-  setLocalStorage("so-cart", cartItems);
-  updateCartCount();
-}
+// addProductToCart() {
+//   const cartItems = getLocalStorage("so-cart") || [];
+//   cartItems.push(this.product);
+//   setLocalStorage("so-cart", cartItems);
+//   updateCartCount();
+// }

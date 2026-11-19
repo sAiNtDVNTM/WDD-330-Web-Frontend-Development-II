@@ -156,14 +156,18 @@ button {
   padding: 1rem;
 }
 
-.product-list {
+.product-category {
+  padding-top: 3rem;
+}
+
+.product-list, .product-category {
   display: flex;
   flex-flow: row wrap;
   list-style-type: none;
   justify-content: center;
 }
 
-.product-list a {
+.product-list a, .product-category a {
   text-decoration: none;
   color: var(--dark-grey);
 }
