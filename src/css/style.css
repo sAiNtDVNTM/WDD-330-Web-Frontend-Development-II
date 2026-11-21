@@ -50,7 +50,7 @@ p {
   font-family: var(--font-headline);
 }
 
-.logo img {
+.logo img, .product-category img {
   width: 60px;
   height: 60px;
 }
@@ -156,14 +156,30 @@ button {
   padding: 1rem;
 }
 
-.product-list {
+.product-category {
+  padding-top: 3rem;
+}
+
+.product-category a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.product-category img {
+  align-items: center;
+}
+
+.product-list, .product-category {
   display: flex;
   flex-flow: row wrap;
   list-style-type: none;
   justify-content: center;
 }
 
-.product-list a {
+.product-list a, .product-category a {
   text-decoration: none;
   color: var(--dark-grey);
 }
