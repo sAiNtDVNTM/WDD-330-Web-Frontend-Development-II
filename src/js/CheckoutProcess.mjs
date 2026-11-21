@@ -14,7 +14,7 @@ export default class CheckoutProcess {
   }
    
     calculateDisplaySubtotal() {
-        product.forEach(item) => {
+        for (const item in product) {
             let price = product.FinalPrice;
             subtotal += price;
         }
