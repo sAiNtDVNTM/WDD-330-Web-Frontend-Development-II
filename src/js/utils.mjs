@@ -19,10 +19,16 @@ export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get(param);
-  return product
+  return product;
 }
 
-export function renderListWithTemplate(template, parentElement, list, position = "afterbegin", clear = false) {
+export function renderListWithTemplate(
+  template,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false,
+) {
   const htmlStrings = list.map(template);
   if (clear) {
     parentElement.innerHTML = "";
@@ -47,14 +53,12 @@ export async function loadTemplate(path) {
 export async function loadHeaderFooter() {
   const headerTemplate = await loadTemplate("/partials/header.html");
   const headerElement = document.querySelector("#main-header");
-
   const footerTemplate = await loadTemplate("/partials/footer.html");
   const footerElement = document.querySelector("#main-footer");
 
   renderWithTemplate(footerTemplate, footerElement);
   renderWithTemplate(headerTemplate, headerElement, undefined, updateCartCount);
 }
-
 
 export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
@@ -65,4 +69,3 @@ export function updateCartCount() {
     badge.textContent = cartItems.length;
   }
 }
-updateCartCount();
