@@ -37,7 +37,7 @@ function productDetailsTemplate(product) {
   document.querySelector(".product-detail h3").textContent =
     product.NameWithoutBrand;
 
-  const productImage = document.getElementById('productImage');
+  const productImage = document.getElementById("productImage");
   productImage.src = product.Images.PrimaryLarge;
   productImage.alt = product.NameWithoutBrand;
 
