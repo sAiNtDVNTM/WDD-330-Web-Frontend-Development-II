@@ -1,8 +1,19 @@
-import { getLocalStorage, renderListWithTemplate } from "./utils.mjs";
-
+import {
+  getLocalStorage,
+  setLocalStorage,
+  renderListWithTemplate,
+  updateCartCount,
+} from "./utils.mjs";
 
 function cartItemTemplate(item) {
-    const newItem = `<li class="cart-card divider">
+  const newItem = `<li class="cart-card divider">
+    <button
+      type="button"
+      class="cart-card__remove"
+      data-id="${item.Id}"
+      aria-label="Remove ${item.Name} from cart"
+    >×</button>
+
     <a href="../product_pages/?product=${item.Id}" class="cart-card__image">
       <img
         src="${item.Images?.PrimaryMedium ?? item.Image}"
@@ -16,27 +27,45 @@ function cartItemTemplate(item) {
     <p class="cart-card__quantity">qty: 1</p>
     <p class="cart-card__price">$${item.FinalPrice.toFixed(2)}</p>
   </li>`;
-  
-    return newItem;
+
+  return newItem;
+}
+
+export default class ShoppingCart {
+  constructor(listElement) {
+    this.listElement = listElement;
   }
 
-  export default class ShoppingCart {
-    constructor(listElement) {
-      this.listElement = listElement;
-    }
-
-    init() {
-        const cartItems = getLocalStorage("so-cart") || [];
-        this.renderList(cartItems);
-      }
-
-      renderList(cartItems) {
-        renderListWithTemplate(
-          cartItemTemplate,
-          this.listElement,
-          cartItems,
-          "afterbegin",
-          true,
-        );
-      }
+  init() {
+    const cartItems = getLocalStorage("so-cart") || [];
+    this.renderList(cartItems);
   }
+
+  renderList(cartItems) {
+    renderListWithTemplate(
+      cartItemTemplate,
+      this.listElement,
+      cartItems,
+      "afterbegin",
+      true,
+    );
+
+    const removeButtons =
+      this.listElement.querySelectorAll(".cart-card__remove");
+
+    removeButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const productId = event.currentTarget.dataset.id;
+        const storedCart = getLocalStorage("so-cart") || [];
+        const itemIndex = storedCart.findIndex((item) => item.Id === productId);
+      
+        if (itemIndex !== -1) {
+          storedCart.splice(itemIndex, 1);
+          setLocalStorage("so-cart", storedCart);
+          this.renderList(storedCart);
+          updateCartCount();
+        }
+      });
+    });
+  }
+}
