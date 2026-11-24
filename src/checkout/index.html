@@ -18,15 +18,15 @@
       <section class="products">
         <h2>Review & Place your Order</h2>
       </section>
-      <form action="" method="">
+      <form id="checkout-form" action="" method="" >
         <h3>Customer Name</h3>
         <div>
-          <label for="firstname">First Name</label>
-          <input type="text" id="firstname" name="firstname" required>
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="fname" required>
         </div>
         <div>
-          <label for="lastname">Last Name</label>
-          <input type="text" id="lastname" name="lastname" required>
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="lname" required>
         </div>
         <h3>Address</h3>
         <div>
@@ -42,32 +42,32 @@
           <input type="text" id="state" name="state" required>
         </div>
         <div>
-          <label for="zipcode">Zip Code</label>
-          <input type="text" pattern="[0-9]{5}" id="zipcode" name="zipcode" required>
+          <label for="zip">Zip Code</label>
+          <input type="text" pattern="[0-9]{5}" id="zip" name="zip" required>
         </div>
         <h3>Payment</h3>
         <div>
-          <label for="creditcard">Credit Card Number</label>
-          <input type="text" pattern="[0-9]{16}" id="creditcard" name="creditcard" required>
+          <label for="cardNumber">Credit Card Number</label>
+          <input type="text" pattern="[0-9]{16}" id="cardNumber" name="cardNumber" required>
         </div>
         <div>
-          <label for="expire">Expiration Date</label>
-          <input type="month" id="expire" name="expire" required>
+          <label for="expiration">Expiration Date</label>
+          <input type="month" id="expiration" name="expiration" required>
         </div>
         <div>
-          <label for="security">Security Code</label>
-          <input type="text" pattern="[0-9]{3}" id="security" name="security" required>
+          <label for="code">Security Code</label>
+          <input type="text" pattern="[0-9]{3}" id="code" name="code" required>
         </div>
         <div>
           <button type="submit">Checkout</button>
         </div>
       </form>
-      <section>
+      <section id="order-summary">
         <h2>Order Summary</h2>
-        <p>Subtotal: <span id="subtotal"></span></p>
-        <p>Tax: <span id=""></span></p>
-        <p>Shipping Estimate: <span id=""></span></p>
-        <p>Order Total: <span id=""></span></p>
+        <p>Subtotal: <span id="subtotal">$0.00</span></p>
+        <p>Tax: <span id="tax">Pending ZIP code</span></p>
+        <p>Shipping Estimate: <span id="shipping">Pending ZIP code</span></p>
+        <p>Order Total: <span id="order-total">Pending ZIP code</span></p>
       </section>
     </main>
 

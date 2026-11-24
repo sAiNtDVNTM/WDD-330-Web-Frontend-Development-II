@@ -1,24 +1,54 @@
-const subtotal = 0;
+import { getLocalStorage } from "./utils.mjs";
 
 export default class CheckoutProcess {
+  constructor(key, outputSelector) {
+    this.key = key;
+    this.outputSelector = outputSelector;
+    this.list = [];
+    this.itemTotal = 0;
+    this.shipping = 0;
+    this.tax = 0;
+    this.orderTotal = 0;
+  }
 
-   constructor(productId, dataSource) {
-    this.productId = productId;
-    this.product = {};
-    this.dataSource = dataSource;
+  init() {
+    this.list = getLocalStorage(this.key) || [];
+    this.calculateItemSubTotal();
   }
-   
-    async init() {
-    this.product = await this.dataSource.findProductById(this.productId);
-    
+
+  calculateItemSubTotal() {
+    this.itemTotal = this.list.reduce((total, item) => {
+      return total + item.FinalPrice;
+    }, 0);
+
+    document.querySelector(`${this.outputSelector} #subtotal`).textContent =
+      `$${this.itemTotal.toFixed(2)}`;
   }
-   
-    calculateDisplaySubtotal() {
-        for (const item in product) {
-            let price = product.FinalPrice;
-            subtotal += price;
-        }
-        document.getElementById("subtotal").textContent = subtotal;
+
+  calculateOrderTotal() {
+    this.tax = Number((this.itemTotal * 0.06).toFixed(2));
+  
+    const itemCount = this.list.length;
+    this.shipping = 0;
+  
+    if (itemCount > 0) {
+      this.shipping = 10 + (itemCount - 1) * 2;
     }
-
+  
+    this.orderTotal = this.itemTotal + this.tax + this.shipping;
+    this.displayOrderTotals();
+  }
+  
+  displayOrderTotals() {
+    const summary = document.querySelector(this.outputSelector);
+  
+    summary.querySelector("#tax").textContent =
+      `$${this.tax.toFixed(2)}`;
+  
+    summary.querySelector("#shipping").textContent =
+      `$${this.shipping.toFixed(2)}`;
+  
+    summary.querySelector("#order-total").textContent =
+      `$${this.orderTotal.toFixed(2)}`;
+  }
 }
