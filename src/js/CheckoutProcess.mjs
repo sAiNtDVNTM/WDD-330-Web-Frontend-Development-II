@@ -1,4 +1,25 @@
 import { getLocalStorage } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
+
+function packageItems(items) {
+  return items.map((item) => ({
+    id: item.Id,
+    name: item.Name,
+    price: item.FinalPrice,
+    quantity: 1,
+  }));
+}
+
+function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const order = {};
+
+  formData.forEach((value, key) => {
+    order[key] = value;
+  });
+
+  return order;
+}
 
 export default class CheckoutProcess {
   constructor(key, outputSelector) {
@@ -50,5 +71,29 @@ export default class CheckoutProcess {
   
     summary.querySelector("#order-total").textContent =
       `$${this.orderTotal.toFixed(2)}`;
+  }
+
+  async checkout(form) {
+    this.list = getLocalStorage(this.key) || [];
+    this.calculateItemSubTotal();
+    this.calculateOrderTotal();
+  
+    if (this.list.length === 0) {
+      throw new Error("Your cart is empty.");
+    }
+  
+    const order = formDataToJSON(form);
+  
+    const [year, month] = order.expiration.split("-");
+    order.expiration = `${Number(month)}/${year.slice(-2)}`;
+  
+    order.orderDate = new Date().toISOString();
+    order.items = packageItems(this.list);
+    order.orderTotal = this.orderTotal.toFixed(2);
+    order.shipping = this.shipping;
+    order.tax = this.tax.toFixed(2);
+  
+    const services = new ExternalServices();
+    return services.checkout(order);
   }
 }

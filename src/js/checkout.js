@@ -13,3 +13,21 @@ zipInput.addEventListener("change", () => {
     checkout.calculateOrderTotal();
   }
 });
+
+const form = document.querySelector("#checkout-form");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+
+  try {
+    const response = await checkout.checkout(form);
+    console.log("Server response:", response);
+  } catch (error) {
+    console.error("Checkout error:", error.message);
+  } finally {
+    submitButton.disabled = false;
+  }
+});
