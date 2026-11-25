@@ -41,7 +41,17 @@ export default class ShoppingCart {
     this.renderList(cartItems);
   }
 
+  calculateSubtotal(cartItems) {
+    const subtotal = cartItems.reduce((total, item) => {
+      return total + item.FinalPrice;
+    }, 0);
+  
+    document.querySelector("#cart-subtotal").textContent =
+      `$${subtotal.toFixed(2)}`;
+  }
+
   renderList(cartItems) {
+    this.calculateSubtotal(cartItems);
     renderListWithTemplate(
       cartItemTemplate,
       this.listElement,
