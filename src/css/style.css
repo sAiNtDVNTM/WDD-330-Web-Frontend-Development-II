@@ -199,6 +199,15 @@ button {
   margin: 0.5em 0;
 }
 
+.discounted {
+  border: solid red;
+}
+
+.product-card__suggested-price {
+  text-decoration: line-through;
+  color: red;
+}
+
 .card__brand {
   font-size: var(--small-font);
 }
