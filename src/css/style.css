@@ -359,3 +359,14 @@ footer {
   grid-column: 2;
   grid-row: 1;
 }
+
+.alert {
+  display: flex;
+  background-color: var(--secondary-color);
+  color: var(--light-grey);
+
+  button {
+    justify-content: flex-end;
+    margin-right: 0;
+  }
+}
