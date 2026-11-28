@@ -69,3 +69,30 @@ export function updateCartCount() {
     badge.textContent = cartItems.length;
   }
 }
+
+export function alertMessage(message, scroll = true) {
+  const alertBox = document.createElement("div");
+  alertBox.classList.add("alert");
+  alertBox.setAttribute("role", "alert");
+
+  const text = document.createElement("p");
+  text.textContent = message;
+
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.textContent = "×";
+  closeButton.setAttribute("aria-label", "Close message");
+
+  closeButton.addEventListener("click", () => {
+    alertBox.remove();
+  });
+
+  alertBox.append(text, closeButton);
+
+  const main = document.querySelector("main");
+  main.prepend(alertBox);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
+}

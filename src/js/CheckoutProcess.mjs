@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 function packageItems(items) {
@@ -74,26 +74,41 @@ export default class CheckoutProcess {
   }
 
   async checkout(form) {
-    this.list = getLocalStorage(this.key) || [];
-    this.calculateItemSubTotal();
-    this.calculateOrderTotal();
+    try {
+      this.list = getLocalStorage(this.key) || [];
+      this.calculateItemSubTotal();
+      this.calculateOrderTotal();
   
-    if (this.list.length === 0) {
-      throw new Error("Your cart is empty.");
+      if (this.list.length === 0) {
+        throw new Error("Your cart is empty.");
+      }
+  
+      const order = formDataToJSON(form);
+  
+      const [year, month] = order.expiration.split("-");
+      order.expiration = `${Number(month)}/${year.slice(-2)}`;
+  
+      order.orderDate = new Date().toISOString();
+      order.items = packageItems(this.list);
+      order.orderTotal = this.orderTotal.toFixed(2);
+      order.shipping = this.shipping;
+      order.tax = this.tax.toFixed(2);
+  
+      const services = new ExternalServices();
+      const response = await services.checkout(order);
+      setLocalStorage(this.key, []);
+      window.location.assign("/checkout/success.html");
+
+      return response;
+    } catch (error) {
+      let message = error.message;
+    
+      if (typeof message === "object" && message !== null) {
+        message = Object.values(message).join(" ");
+      }
+    
+      alertMessage(message || "Unable to place your order. Please try again.");
+      throw error;
     }
-  
-    const order = formDataToJSON(form);
-  
-    const [year, month] = order.expiration.split("-");
-    order.expiration = `${Number(month)}/${year.slice(-2)}`;
-  
-    order.orderDate = new Date().toISOString();
-    order.items = packageItems(this.list);
-    order.orderTotal = this.orderTotal.toFixed(2);
-    order.shipping = this.shipping;
-    order.tax = this.tax.toFixed(2);
-  
-    const services = new ExternalServices();
-    return services.checkout(order);
   }
 }

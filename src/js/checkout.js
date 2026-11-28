@@ -5,6 +5,11 @@ loadHeaderFooter();
 
 const checkout = new CheckoutProcess("so-cart", "#order-summary");
 checkout.init();
+const expirationInput = document.querySelector("#expiration");
+const today = new Date();
+const currentMonth = String(today.getMonth() + 1).padStart(2, "0");
+
+expirationInput.min = `${today.getFullYear()}-${currentMonth}`;
 
 const zipInput = document.querySelector("#zip");
 
@@ -19,7 +24,7 @@ const form = document.querySelector("#checkout-form");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const submitButton = form.querySelector('button[type="submit"]');
+  const submitButton = form.querySelector("button[type='submit']");
   submitButton.disabled = true;
 
   try {

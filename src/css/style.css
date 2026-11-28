@@ -359,3 +359,30 @@ footer {
   grid-column: 2;
   grid-row: 1;
 }
+
+
+/*error style on the checkout*/
+
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--tertiary-color);
+  background-color: #fff4e5;
+  color: var(--dark-grey);
+}
+
+.alert p {
+  margin: 0;
+  padding: 0;
+}
+
+.alert button {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
