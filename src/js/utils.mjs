@@ -71,22 +71,28 @@ export function updateCartCount() {
 }
 
 export function alertMessage(message, scroll = true) {
-  const alert = document.createElement("div");
-  alert.classList.add("alert");
-  const alertInfo = document.createElement("p");
-  alertInfo.textContent = message;
-  const xButton = document.createElement("button");
-  xButton.type = "button";
-  xButton.textContent = "x";
-  xButton.setAttribute("aria-label", "Dismiss message");
-  xButton.addEventListener("click", () => alert.remove());
-  alert.append(alertInfo, xButton);
+  const alertBox = document.createElement("div");
+  alertBox.classList.add("alert");
+  alertBox.setAttribute("role", "alert");
 
-  const main = qs("main");
-  main.prepend(alert);
-  if (scroll) window.scrollTo(0, 0);
-}
+  const text = document.createElement("p");
+  text.textContent = message;
 
-export function removeAllAlerts() {
-  document.querySelectorAll(".alert").forEach((alert) => alert.remove());
+  const closeButton = document.createElement("button");
+  closeButton.type = "button";
+  closeButton.textContent = "×";
+  closeButton.setAttribute("aria-label", "Close message");
+
+  closeButton.addEventListener("click", () => {
+    alertBox.remove();
+  });
+
+  alertBox.append(text, closeButton);
+
+  const main = document.querySelector("main");
+  main.prepend(alertBox);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
 }

@@ -369,13 +369,29 @@ footer {
   grid-row: 1;
 }
 
+
+/*error style on the checkout*/
+
 .alert {
   display: flex;
-  background-color: var(--secondary-color);
-  color: var(--light-grey);
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--tertiary-color);
+  background-color: #fff4e5;
+  color: var(--dark-grey);
+}
 
-  button {
-    justify-content: flex-end;
-    margin-right: 0;
-  }
+.alert p {
+  margin: 0;
+  padding: 0;
+}
+
+.alert button {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
 }
