@@ -1,4 +1,4 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, alertMessage } from "./utils.mjs";
 import CheckoutProcess from "./CheckoutProcess.mjs";
 
 loadHeaderFooter();
@@ -32,6 +32,7 @@ form.addEventListener("submit", async (event) => {
     console.log("Server response:", response);
   } catch (error) {
     console.error("Checkout error:", error.message);
+    alertMessage(error.message);
   } finally {
     submitButton.disabled = false;
   }
